@@ -1,0 +1,56 @@
+package hu.rrsoftvare.RRSoftwareChallenge.Controllers;
+
+import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryDto;
+import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryStatDto;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+
+@RestController
+@RequestMapping(path = "/statistic", name = "Statistic")
+public class CountryStatisticRestController {
+
+    /**
+     * create or ubdate statistic
+     */
+    @PostMapping(value = "/api/addOrEitStatistic")
+    public void getCountry(@RequestBody CountryStatDto countryStatDto){
+    }
+
+
+    /**
+     * Retudn country statistic  if country is exist, return empty object if country not found
+     */
+    @GetMapping(value = "/api/getCountryStatisticByDate")
+    public CountryStatDto getCountry(@RequestBody CountryDto countryDto, Date selectedDay){
+        return new CountryStatDto();
+    }
+
+
+    /**
+     * return summ statistic by country
+     */
+    @GetMapping(value = "/api/getCountryMassStatistic")
+    public CountryStatDto getCountryMassStatistic(@RequestBody CountryDto countryDto){
+        return new CountryStatDto();
+    }
+
+
+    /**
+     * return summ statistic by region
+     */
+    @GetMapping(value = "/api/getRegionMassStatistic")
+    public CountryStatDto getRegionMassStatistic(){
+        return new CountryStatDto();
+    }
+
+
+    /**
+     * return summ statistic by region
+     */
+    @GetMapping(value = "/api/getMassStatistic")
+    public CountryStatDto getMassStatistic(){
+        return new CountryStatDto();
+    }
+
+}
