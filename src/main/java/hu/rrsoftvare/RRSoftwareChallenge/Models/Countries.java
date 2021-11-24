@@ -1,10 +1,7 @@
 package hu.rrsoftvare.RRSoftwareChallenge.Models;
 
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -16,6 +13,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Countries extends BaseEntity {
 
     @Id

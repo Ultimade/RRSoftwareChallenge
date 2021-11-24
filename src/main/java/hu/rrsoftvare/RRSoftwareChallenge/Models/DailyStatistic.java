@@ -1,8 +1,6 @@
 package hu.rrsoftvare.RRSoftwareChallenge.Models;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.envers.Audited;
@@ -15,6 +13,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class DailyStatistic  extends BaseEntity {
 
     @Id
