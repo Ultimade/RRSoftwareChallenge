@@ -2,6 +2,7 @@ package hu.rrsoftvare.RRSoftwareChallenge.Services;
 
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryDto;
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryStatDto;
+import hu.rrsoftvare.RRSoftwareChallenge.Models.Countries;
 
 import java.util.Date;
 
@@ -12,6 +13,14 @@ public interface CountryStatisticService {
      * @param countryStatDto
      */
     public void createorUpdate(CountryStatDto countryStatDto);
+
+    /**
+     * return summ data of a country like all deaths all infected etc..
+     * @param country
+     * @return
+     */
+    public CountryStatDto getCountryStatistic(Countries country, Date day);
+
 
     /**
      * return summ data of a country like all deaths all infected etc..

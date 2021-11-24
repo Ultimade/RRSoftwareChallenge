@@ -2,6 +2,8 @@ package hu.rrsoftvare.RRSoftwareChallenge.Dtos;
 
 import lombok.*;
 
+import java.util.Date;
+
 
 @Getter
 @Setter
@@ -17,4 +19,6 @@ public class CountryDto {
     private String region;
 
     private Long population;
+
+    private Date selectedDay;
 }

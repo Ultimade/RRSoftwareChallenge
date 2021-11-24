@@ -2,6 +2,8 @@ package hu.rrsoftvare.RRSoftwareChallenge.Dtos;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -20,4 +22,6 @@ public class CountryStatDto {
     private CountryDto countryDto;
 
     private String region;
+
+    private Date day;
 }

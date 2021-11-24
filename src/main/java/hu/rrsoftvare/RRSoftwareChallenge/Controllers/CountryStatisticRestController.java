@@ -2,6 +2,7 @@ package hu.rrsoftvare.RRSoftwareChallenge.Controllers;
 
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryDto;
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryStatDto;
+import hu.rrsoftvare.RRSoftwareChallenge.Services.CountryStatisticServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -9,6 +10,12 @@ import java.util.Date;
 @RestController
 @RequestMapping(path = "/statistic", name = "Statistic")
 public class CountryStatisticRestController {
+
+    private final CountryStatisticServiceImpl countryStatisticService;
+
+    public CountryStatisticRestController(CountryStatisticServiceImpl countryStatisticService) {
+        this.countryStatisticService = countryStatisticService;
+    }
 
     /**
      * create or ubdate statistic
@@ -22,8 +29,8 @@ public class CountryStatisticRestController {
      * Retudn country statistic  if country is exist, return empty object if country not found
      */
     @GetMapping(value = "/api/getCountryStatisticByDate")
-    public CountryStatDto getCountry(@RequestBody CountryDto countryDto, Date selectedDay){
-        return new CountryStatDto();
+    public CountryStatDto getCountry(@RequestBody CountryDto countryDto){
+        return countryStatisticService.getCountryStatistic(countryDto);
     }
 
 

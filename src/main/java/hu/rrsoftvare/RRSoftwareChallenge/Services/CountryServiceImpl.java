@@ -6,6 +6,7 @@ import hu.rrsoftvare.RRSoftwareChallenge.Repositories.CountriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,21 +16,36 @@ public class CountryServiceImpl implements CountryService {
     CountriesRepository countriesRepository;
 
     @Override
-    public CountryDto getCountryDatasByNameOrIso(CountryDto countryDto) {
+    public CountryDto getCountryDtoDatasByNameOrIso(CountryDto countryDto) {
         return mapEntityToDto(countriesRepository.findByIsoCodeOrCountryName(countryDto.getIsoCode(), countryDto.getIsoCode()!= null ? null : countryDto.getCountryName()));
+    }
+
+    public Countries getCountryDatasByNameOrIso(CountryDto countryDto) {
+        return countriesRepository.findByIsoCodeOrCountryName(countryDto.getIsoCode(), countryDto.getIsoCode()!= null ? null : countryDto.getCountryName());
     }
 
     @Override
     public List<CountryDto> getCountryList() {
-        return null;
+        return convertEntityListToDtoList(countriesRepository.findAll());
     }
 
     @Override
     public List<CountryDto> getCountryList(String region) {
-        return null;
+        return convertEntityListToDtoList(countriesRepository.findByRegion(region));
     }
 
-    private CountryDto mapEntityToDto(Countries countries){
-        return new CountryDto(countries.getIsoCode(), countries.getCountryName(), countries.getRegion(), countries.getPopulation());
+    public CountryDto mapEntityToDto(Countries countries){
+        return new CountryDto(countries.getIsoCode(), countries.getCountryName(), countries.getRegion(), countries.getPopulation(), null);
+    }
+
+    public List<CountryDto> convertEntityListToDtoList(List<Countries> countries){
+
+        List<CountryDto> countryList = new ArrayList<>();
+        for (Countries c: countries
+        ) {
+            CountryDto countryDto = mapEntityToDto(c);
+            countryList.add(countryDto);
+        }
+        return countryList;
     }
 }

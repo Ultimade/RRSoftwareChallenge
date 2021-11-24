@@ -21,6 +21,6 @@ public class CountryRestController {
      */
     @GetMapping(value = "/api/getCountry")
     public CountryDto getCountry(@RequestBody CountryDto countryDto){
-        return countryService.getCountryDatasByNameOrIso(countryDto);
+        return countryService.getCountryDtoDatasByNameOrIso(countryDto);
     }
 }

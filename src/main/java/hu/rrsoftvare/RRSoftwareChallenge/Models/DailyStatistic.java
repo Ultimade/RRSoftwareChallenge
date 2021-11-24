@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Audited
@@ -33,6 +34,9 @@ public class DailyStatistic  extends BaseEntity {
 
     @Column(name = "healing")
     private Long healings;
+
+    @Column(name = "day")
+    private Date day;
 
     @ManyToOne
     @JoinColumn(name = "country")
