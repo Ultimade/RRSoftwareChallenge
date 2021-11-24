@@ -18,6 +18,11 @@ import java.util.Date;
                 "SUM(ds.testing) as testing from table_daily_stat ds " +
                 "inner join table_country tc on tc.id = ds.country where tc.region =:region group by tc.region",
         resultSetMapping = "Mapping.SumStat")
+@NamedNativeQuery(name = "DailyStatistic.getSummData_Named",
+        query = "SELECT SUM(ds.deaths) as deaths, SUM(ds.healing) as healing, SUM(ds.new_infected) as infected, " +
+                "SUM(ds.testing) as testing, 1 as allrow from table_daily_stat ds " +
+                "inner join table_country tc on tc.id = ds.country  group by allrow",
+        resultSetMapping = "Mapping.SumStat")
 @SqlResultSetMapping(name = "Mapping.SumStat",
         classes = @ConstructorResult(targetClass = SumStat.class,
                 columns = {@ColumnResult(name = "deaths", type=Long.class),

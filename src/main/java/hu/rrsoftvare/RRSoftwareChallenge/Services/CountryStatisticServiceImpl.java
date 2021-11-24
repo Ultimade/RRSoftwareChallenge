@@ -33,14 +33,9 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     @Override
     public CountryStatDto getCountryStatistic(CountryDto countryDto) {
 
-        SumStat dailyStatisticObj = dailyStatisticRepository.getSummDataByCountry_Named(countryService.getCountryDatasByNameOrIso(countryDto).getId());
-        CountryStatDto dailyStatistic = new CountryStatDto();
-        dailyStatistic.setCountryDto(countryService.mapEntityToDto(countryService.getCountryDatasByNameOrIso(countryDto)));
-        dailyStatistic.setDeaths(dailyStatisticObj.getDeaths());
-        dailyStatistic.setHealings(dailyStatisticObj.getHealing());
-        dailyStatistic.setTesting(dailyStatisticObj.getTesting());
-        dailyStatistic.setNewInfected(dailyStatisticObj.getInfected());
-        return dailyStatistic;
+        SumStat dailyStatisticObj = dailyStatisticRepository.getSummDataByCountry_Named(
+                countryService.getCountryDatasByNameOrIso(countryDto).getId());
+        return createCountryStatDto(dailyStatisticObj, null, countryService.getCountryDatasByNameOrIso(countryDto));
     }
 
     public static Date atStartOfDay(Date date) {
@@ -74,19 +69,15 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
 
     @Override
     public CountryStatDto getGlobalStatistic() {
-        return null;
+        SumStat dailyStatisticObj = dailyStatisticRepository.getSummData_Named();
+        return createCountryStatDto(dailyStatisticObj, null, null);
     }
 
     @Override
     public CountryStatDto getRegionStatistic(String region) {
         SumStat dailyStatisticObj = dailyStatisticRepository.getSummDataByRegion_Named(region);
-        CountryStatDto dailyStatistic = new CountryStatDto();
-        dailyStatistic.setRegion(region);
-        dailyStatistic.setDeaths(dailyStatisticObj.getDeaths());
-        dailyStatistic.setHealings(dailyStatisticObj.getHealing());
-        dailyStatistic.setTesting(dailyStatisticObj.getTesting());
-        dailyStatistic.setNewInfected(dailyStatisticObj.getInfected());
-        return dailyStatistic;
+        return createCountryStatDto(dailyStatisticObj, region, null);
+
     }
 
     private CountryStatDto mapEntityToDto (DailyStatistic dailyStatistic){
@@ -95,5 +86,16 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
                 countryService.mapEntityToDto(dailyStatistic.getCountry()), dailyStatistic.getCountry().getRegion(),
                 dailyStatistic.getDay());
 
+    }
+
+    private CountryStatDto createCountryStatDto(SumStat stat, String region, Countries country){
+        CountryStatDto dailyStatistic = new CountryStatDto();
+        dailyStatistic.setRegion(region);
+        dailyStatistic.setDeaths(stat.getDeaths());
+        dailyStatistic.setHealings(stat.getHealing());
+        dailyStatistic.setTesting(stat.getTesting());
+        dailyStatistic.setNewInfected(stat.getInfected());
+        dailyStatistic.setCountryDto(country != null ? countryService.mapEntityToDto(country) : null);
+        return dailyStatistic;
     }
 }

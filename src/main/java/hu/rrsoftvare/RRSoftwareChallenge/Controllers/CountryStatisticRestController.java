@@ -57,7 +57,7 @@ public class CountryStatisticRestController {
      */
     @GetMapping(value = "/api/getMassStatistic")
     public CountryStatDto getMassStatistic(){
-        return new CountryStatDto();
+        return countryStatisticService.getGlobalStatistic();
     }
 
 }
