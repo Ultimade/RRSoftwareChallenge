@@ -12,7 +12,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 
-
+/**
+ * autentikációhoz és audithoz szükséges felhasználó entitás
+ */
 @Entity
 @Table(name = "table_user")
 @Getter

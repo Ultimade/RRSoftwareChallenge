@@ -4,6 +4,9 @@ import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryDto;
 import hu.rrsoftvare.RRSoftwareChallenge.Services.CountryServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Országokkal kapcsolatos api végpontok
+ */
 @RestController
 @RequestMapping(path = "/country", name = "Country")
 public class CountryRestController {

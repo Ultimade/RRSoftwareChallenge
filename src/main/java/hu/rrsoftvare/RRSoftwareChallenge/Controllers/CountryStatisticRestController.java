@@ -5,8 +5,10 @@ import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryStatDto;
 import hu.rrsoftvare.RRSoftwareChallenge.Services.CountryStatisticServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 
+/**
+ * covid statisztikai adatokkal kapcsolatos api végpontok
+ */
 @RestController
 @RequestMapping(path = "/statistic", name = "Statistic")
 public class CountryStatisticRestController {

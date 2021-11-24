@@ -86,7 +86,7 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     }
     
     public CountryStatDto getCountryStatisticByDate(Countries country, Date day) {
-        return mapEntityToDto(getDailyStatisticByDate(country, day));
+        return mapEntityToDto(getDailyStatisticByDate(country, day == null ? new Date(): day));
     }
     public DailyStatistic getDailyStatisticByDate(Countries country, Date day){
         Date dayStart = atStartOfDay(day);

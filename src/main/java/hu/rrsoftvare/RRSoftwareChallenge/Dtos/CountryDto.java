@@ -4,7 +4,9 @@ import lombok.*;
 
 import java.util.Date;
 
-
+/**
+ * api komunikációhoz használt ország osztály
+ */
 @Getter
 @Setter
 @ToString

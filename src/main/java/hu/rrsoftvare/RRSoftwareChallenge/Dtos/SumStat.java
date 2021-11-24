@@ -2,7 +2,9 @@ package hu.rrsoftvare.RRSoftwareChallenge.Dtos;
 
 import lombok.*;
 
-
+/**
+ * querry-ben történő számolásokhoz használt osztály
+ */
 @Getter
 @Setter
 @ToString

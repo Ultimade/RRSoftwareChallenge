@@ -9,6 +9,9 @@ import org.hibernate.envers.Audited;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Statisztika entitás, nevesített natív query-k itt vannak definiálva
+ */
 @NamedNativeQuery(name = "DailyStatistic.getSummDataByCountry_Named",
         query = "SELECT SUM(ds.deaths) as deaths,   SUM(ds.healing) as healing, SUM(ds.new_infected) as infected, " +
                 "SUM(ds.testing) as testing from table_daily_stat ds WHERE ds.country = :id group by ds.country",

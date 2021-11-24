@@ -12,6 +12,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * ős entitás az auditáláshoz szükséges
+ */
 @Getter
 @Setter
 @ToString

@@ -6,6 +6,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+/**
+ * autentikációhoz szükséges szerepkörk
+ */
 @Entity
 @Table(name = "table_role")
 @Getter

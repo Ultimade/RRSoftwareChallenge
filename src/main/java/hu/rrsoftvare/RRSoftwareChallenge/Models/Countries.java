@@ -6,10 +6,12 @@ import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+/**
+ * osrszágok entitás
+ */
 @Entity
 @Audited
 @Table(name = "table_country")
-
 @Getter
 @Setter
 @ToString

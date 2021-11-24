@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.util.Date;
 
+/**
+ * api végpontokhoz használt statisztika osztály
+ */
 @Getter
 @Setter
 @ToString
