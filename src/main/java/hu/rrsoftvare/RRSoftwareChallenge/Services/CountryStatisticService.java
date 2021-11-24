@@ -42,7 +42,7 @@ public interface CountryStatisticService {
      * return global summ data of deaths, infecteds etc..
      * @return
      */
-    public CountryStatDto getGlobalStatisticList();
+    public CountryStatDto getGlobalStatistic();
 
     /**
      * return global summ data of deaths, infecteds etc.. by region

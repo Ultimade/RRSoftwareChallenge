@@ -14,4 +14,7 @@ public interface DailyStatisticRepository extends JpaRepository<DailyStatistic, 
 
     @Query( nativeQuery = true)
     SumStat getSummDataByCountry_Named(Long id);
+
+    @Query( nativeQuery = true)
+    SumStat getSummDataByRegion_Named(String region);
 }

@@ -73,13 +73,20 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     }
 
     @Override
-    public CountryStatDto getGlobalStatisticList() {
+    public CountryStatDto getGlobalStatistic() {
         return null;
     }
 
     @Override
     public CountryStatDto getRegionStatistic(String region) {
-        return null;
+        SumStat dailyStatisticObj = dailyStatisticRepository.getSummDataByRegion_Named(region);
+        CountryStatDto dailyStatistic = new CountryStatDto();
+        dailyStatistic.setRegion(region);
+        dailyStatistic.setDeaths(dailyStatisticObj.getDeaths());
+        dailyStatistic.setHealings(dailyStatisticObj.getHealing());
+        dailyStatistic.setTesting(dailyStatisticObj.getTesting());
+        dailyStatistic.setNewInfected(dailyStatisticObj.getInfected());
+        return dailyStatistic;
     }
 
     private CountryStatDto mapEntityToDto (DailyStatistic dailyStatistic){

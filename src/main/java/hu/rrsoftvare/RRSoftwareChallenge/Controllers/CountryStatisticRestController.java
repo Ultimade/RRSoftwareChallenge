@@ -47,8 +47,8 @@ public class CountryStatisticRestController {
      * return summ statistic by region
      */
     @GetMapping(value = "/api/getRegionMassStatistic")
-    public CountryStatDto getRegionMassStatistic(){
-        return new CountryStatDto();
+    public CountryStatDto getRegionMassStatistic(@RequestBody String region){
+        return countryStatisticService.getRegionStatistic(region);
     }
 
 
