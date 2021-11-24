@@ -12,7 +12,7 @@ public interface CountryStatisticService {
      * create or refres daily statistic of a country
      * @param countryStatDto
      */
-    public void createorUpdate(CountryStatDto countryStatDto);
+    public void createOrUpdate(CountryStatDto countryStatDto);
 
 
     /**

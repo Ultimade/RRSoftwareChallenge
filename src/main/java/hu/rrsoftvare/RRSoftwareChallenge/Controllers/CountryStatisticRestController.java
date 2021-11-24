@@ -22,6 +22,8 @@ public class CountryStatisticRestController {
      */
     @PostMapping(value = "/api/addOrEitStatistic")
     public void addOrEitStatistic(@RequestBody CountryStatDto countryStatDto){
+        String asd = "asd";
+        countryStatisticService.createOrUpdate(countryStatDto);
     }
 
 

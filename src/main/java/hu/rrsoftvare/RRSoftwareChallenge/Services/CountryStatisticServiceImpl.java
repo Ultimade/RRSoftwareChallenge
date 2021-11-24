@@ -26,8 +26,31 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     DailyStatisticRepository dailyStatisticRepository;
 
     @Override
-    public void createorUpdate(CountryStatDto countryStatDto) {
+    public void createOrUpdate(CountryStatDto countryStatDto) {
+        Countries country = countryService.getCountryDatasByNameOrIso(countryStatDto.getCountryDto());
+        if (country != null) {
+            DailyStatistic dailyStatistic = getDailyStatisticByDate(country, countryStatDto.getDay());
+            if (dailyStatistic == null) {
+                dailyStatistic = new DailyStatistic();
+                dailyStatistic.setCountry(country);
+                dailyStatistic.setDay(countryStatDto.getDay());
+                dailyStatistic.setCreatedBy("pasz");
+                dailyStatistic.setCreatedDate(new Date());
+            }
 
+            dailyStatistic.setTesting(countryStatDto.getTesting());
+            dailyStatistic.setHealing(countryStatDto.getHealings());
+            dailyStatistic.setDeaths(countryStatDto.getDeaths());
+            dailyStatistic.setNewInfected(countryStatDto.getNewInfected());
+            dailyStatistic.setModifiedBy("pasz2");
+            dailyStatistic.setUpdatedDate(new Date());
+            
+            try {
+                dailyStatisticRepository.save(dailyStatistic);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -61,10 +84,14 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     public CountryStatDto getCountryStatisticByDate(CountryDto countryDto) {
         return getCountryStatisticByDate(countryService.getCountryDatasByNameOrIso(countryDto), countryDto.getSelectedDay());
     }
+    
     public CountryStatDto getCountryStatisticByDate(Countries country, Date day) {
+        return mapEntityToDto(getDailyStatisticByDate(country, day));
+    }
+    public DailyStatistic getDailyStatisticByDate(Countries country, Date day){
         Date dayStart = atStartOfDay(day);
         Date dayEnd = atEndOfDay(day);
-        return mapEntityToDto(dailyStatisticRepository.findByCountryAndDayBetween(country, dayStart, dayEnd));
+        return dailyStatisticRepository.findByCountryAndDayBetween(country, dayStart, dayEnd);
     }
 
     @Override
