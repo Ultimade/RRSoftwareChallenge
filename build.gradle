@@ -19,13 +19,25 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.flywaydb:flyway-core'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//db kezelés
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.6'
+	implementation 'org.flywaydb:flyway-core:8.0.2'
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	runtimeOnly 'org.postgresql:postgresql:42.3.1'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+	//audit
+	compileOnly 'org.hibernate:hibernate-core:5.4.9.Final'
+	compileOnly 'org.hibernate:hibernate-envers:5.4.9.Final'
+
+	//teszt implementáció
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
+
+	//frontend
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.6'
+
+	//Táblázatokhoz
+	compileOnly "io.github.jpenren:thymeleaf-spring-data-dialect:3.3.1"
+	compileOnly "com.github.darrachequesne:spring-data-jpa-datatables:5.0.0"
 }
 
 test {
