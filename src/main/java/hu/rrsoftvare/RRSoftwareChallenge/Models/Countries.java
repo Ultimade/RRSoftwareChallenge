@@ -14,7 +14,7 @@ public class Countries extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "country_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "iso_code", unique = true)
@@ -23,10 +23,10 @@ public class Countries extends BaseEntity {
     @Column(name = "name")
     private String countryName;
 
-    @Column(name = "region", unique = true)
+    @Column(name = "region")
     private String region;
 
-    @Column(name = "population", unique = true)
+    @Column(name = "population")
     private Long population;
 
 
