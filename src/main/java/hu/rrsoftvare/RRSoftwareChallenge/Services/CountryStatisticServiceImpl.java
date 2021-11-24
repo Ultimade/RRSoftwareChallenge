@@ -2,6 +2,7 @@ package hu.rrsoftvare.RRSoftwareChallenge.Services;
 
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryDto;
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryStatDto;
+import hu.rrsoftvare.RRSoftwareChallenge.Dtos.SumStat;
 import hu.rrsoftvare.RRSoftwareChallenge.Models.Countries;
 import hu.rrsoftvare.RRSoftwareChallenge.Models.DailyStatistic;
 import hu.rrsoftvare.RRSoftwareChallenge.Repositories.DailyStatisticRepository;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CountryStatisticServiceImpl implements CountryStatisticService {
@@ -29,14 +32,17 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
 
     @Override
     public CountryStatDto getCountryStatistic(CountryDto countryDto) {
-        return getCountryStatistic(countryService.getCountryDatasByNameOrIso(countryDto), countryDto.getSelectedDay());
+
+        SumStat dailyStatisticObj = dailyStatisticRepository.getSummDataByCountry_Named(countryService.getCountryDatasByNameOrIso(countryDto).getId());
+        CountryStatDto dailyStatistic = new CountryStatDto();
+        dailyStatistic.setCountryDto(countryService.mapEntityToDto(countryService.getCountryDatasByNameOrIso(countryDto)));
+        dailyStatistic.setDeaths(dailyStatisticObj.getDeaths());
+        dailyStatistic.setHealings(dailyStatisticObj.getHealing());
+        dailyStatistic.setTesting(dailyStatisticObj.getTesting());
+        dailyStatistic.setNewInfected(dailyStatisticObj.getInfected());
+        return dailyStatistic;
     }
 
-    public CountryStatDto getCountryStatistic(Countries country, Date day) {
-        Date dayStart = atStartOfDay(day);
-        Date dayEnd = atEndOfDay(day);
-        return mapEntityToDto(dailyStatisticRepository.findByCountryAndDayBetween(country, dayStart, dayEnd));
-    }
     public static Date atStartOfDay(Date date) {
         LocalDateTime localDateTime = dateToLocalDateTime(date);
         LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
@@ -57,8 +63,13 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     }
 
     @Override
-    public CountryStatDto getCountryStatisticByDate(CountryDto country, Date selectedDay) {
-        return null;
+    public CountryStatDto getCountryStatisticByDate(CountryDto countryDto) {
+        return getCountryStatisticByDate(countryService.getCountryDatasByNameOrIso(countryDto), countryDto.getSelectedDay());
+    }
+    public CountryStatDto getCountryStatisticByDate(Countries country, Date day) {
+        Date dayStart = atStartOfDay(day);
+        Date dayEnd = atEndOfDay(day);
+        return mapEntityToDto(dailyStatisticRepository.findByCountryAndDayBetween(country, dayStart, dayEnd));
     }
 
     @Override
@@ -73,7 +84,7 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
 
     private CountryStatDto mapEntityToDto (DailyStatistic dailyStatistic){
         return new CountryStatDto(dailyStatistic.getTesting(), dailyStatistic.getNewInfected(),
-                dailyStatistic.getDeaths(), dailyStatistic.getHealings(),
+                dailyStatistic.getDeaths(), dailyStatistic.getHealing(),
                 countryService.mapEntityToDto(dailyStatistic.getCountry()), dailyStatistic.getCountry().getRegion(),
                 dailyStatistic.getDay());
 

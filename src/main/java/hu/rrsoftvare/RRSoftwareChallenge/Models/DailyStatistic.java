@@ -1,5 +1,6 @@
 package hu.rrsoftvare.RRSoftwareChallenge.Models;
 
+import hu.rrsoftvare.RRSoftwareChallenge.Dtos.SumStat;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -8,6 +9,16 @@ import org.hibernate.envers.Audited;
 import javax.persistence.*;
 import java.util.Date;
 
+@NamedNativeQuery(name = "DailyStatistic.getSummDataByCountry_Named",
+        query = "SELECT SUM(ds.deaths) as deaths,   SUM(ds.healing) as healing, SUM(ds.new_infected) as infected, " +
+                "SUM(ds.testing) as testing from table_daily_stat ds WHERE ds.country = :id group by ds.country",
+        resultSetMapping = "Mapping.SumStat")
+@SqlResultSetMapping(name = "Mapping.SumStat",
+        classes = @ConstructorResult(targetClass = SumStat.class,
+                columns = {@ColumnResult(name = "deaths", type=Long.class),
+                        @ColumnResult(name = "healing", type=Long.class),
+                        @ColumnResult(name = "infected", type=Long.class),
+                        @ColumnResult(name = "testing", type=Long.class)}))
 @Entity
 @Audited
 @Table(name = "table_daily_stat")
@@ -33,7 +44,7 @@ public class DailyStatistic  extends BaseEntity {
     private Long deaths;
 
     @Column(name = "healing")
-    private Long healings;
+    private Long healing;
 
     @Column(name = "day")
     private Date day;

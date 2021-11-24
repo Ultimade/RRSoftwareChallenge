@@ -21,7 +21,7 @@ public class CountryStatisticRestController {
      * create or ubdate statistic
      */
     @PostMapping(value = "/api/addOrEitStatistic")
-    public void getCountry(@RequestBody CountryStatDto countryStatDto){
+    public void addOrEitStatistic(@RequestBody CountryStatDto countryStatDto){
     }
 
 
@@ -29,8 +29,8 @@ public class CountryStatisticRestController {
      * Retudn country statistic  if country is exist, return empty object if country not found
      */
     @GetMapping(value = "/api/getCountryStatisticByDate")
-    public CountryStatDto getCountry(@RequestBody CountryDto countryDto){
-        return countryStatisticService.getCountryStatistic(countryDto);
+    public CountryStatDto getCountryStatisticByDate(@RequestBody CountryDto countryDto){
+        return countryStatisticService.getCountryStatisticByDate(countryDto);
     }
 
 
@@ -39,7 +39,7 @@ public class CountryStatisticRestController {
      */
     @GetMapping(value = "/api/getCountryMassStatistic")
     public CountryStatDto getCountryMassStatistic(@RequestBody CountryDto countryDto){
-        return new CountryStatDto();
+        return countryStatisticService.getCountryStatistic(countryDto);
     }
 
 

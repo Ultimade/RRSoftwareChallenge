@@ -14,13 +14,6 @@ public interface CountryStatisticService {
      */
     public void createorUpdate(CountryStatDto countryStatDto);
 
-    /**
-     * return summ data of a country like all deaths all infected etc..
-     * @param country
-     * @return
-     */
-    public CountryStatDto getCountryStatistic(Countries country, Date day);
-
 
     /**
      * return summ data of a country like all deaths all infected etc..
@@ -35,7 +28,15 @@ public interface CountryStatisticService {
      * @param selectedDay
      * @return
      */
-    public CountryStatDto getCountryStatisticByDate(CountryDto country, Date selectedDay);
+    public CountryStatDto getCountryStatisticByDate(Countries country, Date day);
+
+    /**
+     * return daily statisctic of a country
+     * @param country
+     * @param selectedDay
+     * @return
+     */
+    public CountryStatDto getCountryStatisticByDate(CountryDto countryDto);
 
     /**
      * return global summ data of deaths, infecteds etc..
