@@ -8,9 +8,6 @@ import hu.rrsoftvare.RRSoftwareChallenge.Services.XmlServiceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-
 
 /**
  * covid statisztikai adatokkal kapcsolatos api végpontok
@@ -80,6 +77,10 @@ public class CountryStatisticRestController {
         return xmlService.createXmlFromDb();
     }
 
+
+    /**
+     * az apin keresztül kapott xml állományt menti adatbázisba
+     */
     @GetMapping(value ="/api/uploadStatisticFromXml")
     public void  uploadStatisticFromXml(@RequestBody Statistics statistics){
         xmlService.convertXmlToEntityList(statistics);

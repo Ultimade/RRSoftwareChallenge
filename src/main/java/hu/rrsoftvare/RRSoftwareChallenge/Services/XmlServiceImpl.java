@@ -17,6 +17,9 @@ public class XmlServiceImpl implements XmlService {
     @Autowired
     CountryStatisticServiceImpl countryStatisticService;
 
+    /**
+     * xml obijektumot készít az adatbázisban tárolt adatokból
+     */
     @Override
     public Statistics createXmlFromDb() {
         List<DailyStatistic> list = countryStatisticService.getDailyStatisticList();
@@ -26,6 +29,9 @@ public class XmlServiceImpl implements XmlService {
         return statistics;
     }
 
+    /**
+     * xml állományból adstokat tölt az adatbázisba
+     */
     @Override
     public void convertXmlToEntityList(Statistics statistics) {
         List<DailyStatistic> dailyStatisticList = convertXmlListToStatisticEntityList(statistics.getStatistic());
@@ -35,6 +41,9 @@ public class XmlServiceImpl implements XmlService {
         }
     }
 
+    /**
+     * ország entity-ből mappol xml-t
+     */
     private Country mapCountryEntityToXml(Countries countries){
         Country country = new Country();
         country.setId(countries.getId());
@@ -45,6 +54,9 @@ public class XmlServiceImpl implements XmlService {
         return country;
     }
 
+    /**
+     * xml-ből mapol country entity-t
+     */
     private Countries mapXmlToCountryEntity(Country country){
         Countries countries = new Countries();
         countries.setId(country.getId());
@@ -55,6 +67,9 @@ public class XmlServiceImpl implements XmlService {
         return countries;
     }
 
+    /**
+     * DailyStatistic entity-ből mapol xml-t
+     */
     private Statistic mapStatisticEntityToXml(DailyStatistic dailyStatistic){
         Statistic statistic = new Statistic();
         statistic.setId(dailyStatistic.getId());
@@ -67,6 +82,9 @@ public class XmlServiceImpl implements XmlService {
         return statistic;
     }
 
+    /**
+     * xml-ből mapol DailyStatistic entity-t
+     */
     private DailyStatistic mapXmTolStatisticEntity(Statistic statistic){
         DailyStatistic dailyStatistic = new DailyStatistic();
         dailyStatistic.setId(statistic.getId());
@@ -79,6 +97,9 @@ public class XmlServiceImpl implements XmlService {
         return dailyStatistic;
     }
 
+    /**
+     * entity listából konvertál xml listába
+     */
     private List<Statistic> convertStatisticEntityListToXmlList(List<DailyStatistic> dailyStatisticList){
         List<Statistic> statisticList = new ArrayList<>();
         for (DailyStatistic daily : dailyStatisticList
@@ -88,6 +109,9 @@ public class XmlServiceImpl implements XmlService {
         return statisticList;
     }
 
+    /**
+     * xml listából csinál entity listát
+     */
     private List<DailyStatistic> convertXmlListToStatisticEntityList(List<Statistic> statisticList){
         List<DailyStatistic> dailyStatisticList = new ArrayList<>();
         for (Statistic statistic : statisticList
