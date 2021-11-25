@@ -8,8 +8,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 
 /**
@@ -30,21 +28,16 @@ public class User extends BaseEntity {
     private Long id;
 
     @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an Email")
     private String email;
 
     @Column(name = "password")
-    @NotEmpty(message = "Please provide your password")
     @org.springframework.data.annotation.Transient
     private String password;
 
     @Column(name = "username", unique = true)
-    @NotEmpty(message = "Please provide your username")
     private String username;
 
     @Column(name = "fullname")
-    @NotEmpty(message = "Please provide your real name")
     private String fullname;
 
     @Column(name = "active")
