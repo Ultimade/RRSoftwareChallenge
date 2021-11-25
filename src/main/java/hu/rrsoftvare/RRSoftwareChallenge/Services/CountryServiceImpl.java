@@ -27,7 +27,14 @@ public class CountryServiceImpl implements CountryService {
      * iso kód vagy országnév lapján megkeres egy országot és azt modellként visszaadja
      */
     public Countries getCountryDatasByNameOrIso(CountryDto countryDto) {
-        return countriesRepository.findByIsoCodeOrCountryName(countryDto.getIsoCode(), countryDto.getIsoCode()!= null ? null : countryDto.getCountryName());
+        return getCountryDatasByNameOrIso(countryDto.getIsoCode() , countryDto.getCountryName());
+    }
+
+    /**
+     * iso kód vagy országnév lapján megkeres egy országot és azt modellként visszaadja
+     */
+    public Countries getCountryDatasByNameOrIso(String isoCode, String countryName) {
+        return countriesRepository.findByIsoCodeOrCountryName(isoCode, isoCode!= null ? null : countryName);
     }
 
     /**
@@ -47,10 +54,17 @@ public class CountryServiceImpl implements CountryService {
     }
 
     /**
-     * amodell-ből dto-t mappol
+     * a modell-ből dto-t mappol
      */
     public CountryDto mapEntityToDto(Countries countries){
         return new CountryDto(countries.getIsoCode(), countries.getCountryName(), countries.getRegion(), countries.getPopulation(), null);
+    }
+
+    /**
+     * a dto-ból model-t mappol
+     */
+    public Countries mapDtoToEntity(CountryDto countryDto){
+        return new Countries(null, countryDto.getIsoCode(), countryDto.getCountryName(), countryDto.getRegion(), countryDto.getPopulation());
     }
 
     /**

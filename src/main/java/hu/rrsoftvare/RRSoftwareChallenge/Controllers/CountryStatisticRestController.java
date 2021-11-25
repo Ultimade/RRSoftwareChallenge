@@ -2,8 +2,14 @@ package hu.rrsoftvare.RRSoftwareChallenge.Controllers;
 
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryDto;
 import hu.rrsoftvare.RRSoftwareChallenge.Dtos.CountryStatDto;
+import hu.rrsoftvare.RRSoftwareChallenge.Models.xml.Statistics;
 import hu.rrsoftvare.RRSoftwareChallenge.Services.CountryStatisticServiceImpl;
+import hu.rrsoftvare.RRSoftwareChallenge.Services.XmlServiceImpl;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 
 /**
@@ -14,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 public class CountryStatisticRestController {
 
     private final CountryStatisticServiceImpl countryStatisticService;
+    private final XmlServiceImpl xmlService;
 
-    public CountryStatisticRestController(CountryStatisticServiceImpl countryStatisticService) {
+    public CountryStatisticRestController(CountryStatisticServiceImpl countryStatisticService, XmlServiceImpl xmlService) {
         this.countryStatisticService = countryStatisticService;
+        this.xmlService = xmlService;
     }
 
     /**
@@ -62,6 +70,19 @@ public class CountryStatisticRestController {
     @GetMapping(value = "/api/getMassStatistic")
     public CountryStatDto getMassStatistic(){
         return countryStatisticService.getGlobalStatistic();
+    }
+
+    /**
+     * xml formában visszaadja a statisztikai adatokat
+     */
+    @GetMapping(value ="/api/getStatisticXml", produces = { MediaType.APPLICATION_XML_VALUE  })
+    public Statistics getStatisticXml(){
+        return xmlService.createXmlFromDb();
+    }
+
+    @GetMapping(value ="/api/uploadStatisticFromXml")
+    public void  uploadStatisticFromXml(@RequestBody Statistics statistics){
+        xmlService.convertXmlToEntityList(statistics);
     }
 
 }

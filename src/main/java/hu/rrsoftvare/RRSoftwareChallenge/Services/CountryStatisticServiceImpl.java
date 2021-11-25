@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,28 +25,34 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     DailyStatisticRepository dailyStatisticRepository;
 
     /**
-     * a kapott statisztikai adatokat ha léteznek felül írja, ha nem akkor betölti az adatbázisba
+     * a kapott statisztikai adatokat entity formára hozza és menti az adatbázisba
      */
     @Override
     public void createOrUpdate(CountryStatDto countryStatDto) {
-        Countries country = countryService.getCountryDatasByNameOrIso(countryStatDto.getCountryDto());
+        createOrUpdateStatistic(mapDtoToEntity(countryStatDto));
+    }
+    /**
+     * a kapott statisztikai adatokat ha léteznek felül írja, ha nem akkor betölti az adatbázisba
+     */
+    public void createOrUpdateStatistic(DailyStatistic dailyStat){
+        Countries country = countryService.getCountryDatasByNameOrIso(dailyStat.getCountry().getIsoCode(), dailyStat.getCountry().getCountryName());
         if (country != null) {
-            DailyStatistic dailyStatistic = getDailyStatisticByDate(country, countryStatDto.getDay());
+            DailyStatistic dailyStatistic = getDailyStatisticByDate(country, dailyStat.getDay());
             if (dailyStatistic == null) {
                 dailyStatistic = new DailyStatistic();
                 dailyStatistic.setCountry(country);
-                dailyStatistic.setDay(countryStatDto.getDay());
+                dailyStatistic.setDay(dailyStat.getDay());
                 dailyStatistic.setCreatedBy("pasz");
                 dailyStatistic.setCreatedDate(new Date());
             }
 
-            dailyStatistic.setTesting(countryStatDto.getTesting());
-            dailyStatistic.setHealing(countryStatDto.getHealings());
-            dailyStatistic.setDeaths(countryStatDto.getDeaths());
-            dailyStatistic.setNewInfected(countryStatDto.getNewInfected());
+            dailyStatistic.setTesting(dailyStat.getTesting());
+            dailyStatistic.setHealing(dailyStat.getHealing());
+            dailyStatistic.setDeaths(dailyStat.getDeaths());
+            dailyStatistic.setNewInfected(dailyStat.getNewInfected());
             dailyStatistic.setModifiedBy("pasz2");
             dailyStatistic.setUpdatedDate(new Date());
-            
+
             try {
                 dailyStatisticRepository.save(dailyStatistic);
             }catch (Exception ex){
@@ -58,7 +63,6 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
 
     /**
      * visszaadja egy adott ország összesített statisztikáját
-     * @return
      */
     @Override
     public CountryStatDto getCountryStatistic(CountryDto countryDto) {
@@ -155,6 +159,23 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
     }
 
     /**
+     * dtoból csinál model-t
+     */
+    private DailyStatistic mapDtoToEntity (CountryStatDto countryStatDto){
+        return new DailyStatistic(null, countryStatDto.getTesting(), countryStatDto.getNewInfected(),
+                countryStatDto.getDeaths(), countryStatDto.getHealings(),countryStatDto.getDay(),
+                countryService.mapDtoToEntity(countryStatDto.getCountryDto()));
+
+    }
+
+    /**
+     * visszaadja az összes statisztikai adatot
+     */
+    public List<DailyStatistic> getDailyStatisticList(){
+        return dailyStatisticRepository.findAll();
+    }
+
+    /**
      * összerakja a statisztika válasz dto-át
      */
     private CountryStatDto createCountryStatDto(SumStat stat, String region, Countries country){
@@ -167,4 +188,6 @@ public class CountryStatisticServiceImpl implements CountryStatisticService {
         dailyStatistic.setCountryDto(country != null ? countryService.mapEntityToDto(country) : null);
         return dailyStatistic;
     }
+
+
 }
