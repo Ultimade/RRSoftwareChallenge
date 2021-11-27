@@ -1,5 +1,5 @@
 # RRSoftwareChallenge
-Ty to resolving R&amp;R Software developer test
+Try to resolving R&amp;R Software developer test
 
 Indoklás:
 Az adatbázis kezeléshez azért a spring-boot-starter-data-jpa, postgresql, flyway-core kombinációt használtam, 
